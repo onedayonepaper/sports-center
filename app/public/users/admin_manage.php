@@ -1,136 +1,36 @@
 <?php
+// admin_manage.php
 namespace App;
 
-use App\Core\Database;
-use App\Models\UserModel;
+require_once __DIR__ . '/../../Core/Database.php';
+require_once __DIR__ . '/../../Models/UserModel.php';
+require_once __DIR__ . '/../../Controllers/AdminController.php';
 
-session_start();
-require_once __DIR__ . '/../../app/Core/Database.php';
-require_once __DIR__ . '/../../app/Models/UserModel.php';
+use App\Controllers\AdminController;
 
-// 관리자 체크
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'ADMIN') {
-    die("관리자 전용 페이지");
+// 세션
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-// Ajax
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    header('Content-Type: application/json; charset=utf-8');
-    $action = $_POST['action'] ?? '';
-
-    if ($action === 'load_users') {
-        $list = UserModel::getAllUsers();
-        echo json_encode($list);
-        exit;
-    }
-    elseif ($action === 'promote') {
-        $uid = (int)($_POST['user_id'] ?? 0);
-        if ($uid > 0) {
-            UserModel::updateRole($uid, 'ADMIN');
-            echo json_encode(["status"=>"success"]);
-        } else {
-            echo json_encode(["status"=>"error","message"=>"잘못된 user_id"]);
-        }
-        exit;
-    }
+// 관리자 권한 체크
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'ADMIN') {
+    header("HTTP/1.1 403 Forbidden");
+    echo "접근 불가 - 관리자 전용 페이지입니다.";
     exit;
 }
-?>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>관리자 - 사용자 관리</title>
-  <script 
-    src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
-    crossorigin="anonymous">
-  </script>
-</head>
-<body>
-<h1>관리자 전용 - 사용자 관리</h1>
-<a href="../index.php">메인 페이지</a>
-<hr>
 
-<button id="loadBtn">사용자 목록</button>
-<table border="1" cellpadding="5" id="userTable">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>아이디</th>
-      <th>권한</th>
-      <th>가입일</th>
-      <th>승격</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+// POST 요청 -> Ajax 처리
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    header('Content-Type: application/json; charset=utf-8');
 
-<div id="err" style="color:red;"></div>
+    $adminController = new AdminController();
+    $result = $adminController->handleAjax($_POST);
+    echo json_encode($result);
+    exit;
+}
 
-<script>
-$(function(){
-  $('#loadBtn').click(loadUsers).click(); // 첫 로드 시 목록
-
-  function loadUsers(){
-    $.ajax({
-      url: 'admin_manage.php',
-      method: 'POST',
-      data: { action: 'load_users' },
-      dataType: 'json',
-      success: function(res){
-        buildTable(res);
-      },
-      error: function(){
-        $('#err').text("목록 로드 실패");
-      }
-    });
-  }
-
-  function buildTable(userList){
-    let $tbody = $('#userTable tbody');
-    $tbody.empty();
-    $.each(userList, function(i, user){
-      let $tr = $('<tr>');
-      $tr.append($('<td>').text(user.user_id));
-      $tr.append($('<td>').text(user.username));
-      $tr.append($('<td>').text(user.role));
-      $tr.append($('<td>').text(user.created_at));
-
-      let $td = $('<td>');
-      if(user.role !== 'ADMIN'){
-        let $btn = $('<button>').text('승격').click(function(){
-          promoteUser(user.user_id);
-        });
-        $td.append($btn);
-      } else {
-        $td.text('(이미 관리자)');
-      }
-      $tr.append($td);
-      $tbody.append($tr);
-    });
-  }
-
-  function promoteUser(uid){
-    $.ajax({
-      url: 'admin_manage.php',
-      method: 'POST',
-      data: { action:'promote', user_id: uid },
-      dataType: 'json',
-      success: function(res){
-        if(res.status === 'success'){
-          alert("승격 완료");
-          loadUsers();
-        } else {
-          alert("오류: " + res.message);
-        }
-      },
-      error: function(){
-        alert("통신 오류");
-      }
-    });
-  }
-});
-</script>
-</body>
-</html>
+// GET 요청 -> 관리자 화면
+require_once __DIR__ . '/../../Views/layouts/header.php';
+require_once __DIR__ . '/../../Views/admin/admin_manage.php';
+require_once __DIR__ . '/../../Views/layouts/footer.php';

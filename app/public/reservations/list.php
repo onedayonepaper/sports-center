@@ -1,49 +1,38 @@
 <?php
-// reservations/list.php
-// 예약 목록 조회 페이지
+namespace App;
 
-require_once __DIR__ . '/../../app/Core/Database.php';
-require_once __DIR__ . '/../../app/Models/ReservationModel.php';
+require_once __DIR__ . '/../../Core/Database.php';
+require_once __DIR__ . '/../../Models/ReservationModel.php';
+require_once __DIR__ . '/../../Controllers/ReservationController.php';
 
 use App\Models\ReservationModel;
+use App\Controllers\ReservationController;
 
-// 예약 전체 목록 불러오기
-$resList = ReservationModel::getAllReservations();
-?>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>예약 목록</title>
-</head>
-<body>
-<h1>예약 목록</h1>
-<table border="1" cellpadding="5">
-  <tr>
-    <th>ID</th>
-    <th>시설</th>
-    <th>시작시간</th>
-    <th>종료시간</th>
-    <th>사용자</th>
-    <th>관리</th>
-  </tr>
-  <?php foreach($resList as $row): ?>
-  <tr>
-    <td><?= $row['reservation_id'] ?></td>
-    <td><?= htmlspecialchars($row['facility_name']) ?></td>
-    <td><?= $row['start_time'] ?></td>
-    <td><?= $row['end_time'] ?></td>
-    <td><?= htmlspecialchars($row['username']) ?></td>
-    <td>
-      <a href="update.php?reservation_id=<?= $row['reservation_id'] ?>">[수정]</a>
-      <a href="delete.php?reservation_id=<?= $row['reservation_id'] ?>">[삭제]</a>
-    </td>
-  </tr>
-  <?php endforeach; ?>
-</table>
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-<a href="create.php">새 예약 만들기</a> |
-<a href="../index.php">메인 페이지</a>
+// (예) 관리자만 접근하거나, 사용자도 접근 가능하게 할 수 있음.
+// 여기서는 관리자만 접근한다고 가정
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'ADMIN') {
+    header("HTTP/1.1 403 Forbidden");
+    echo "접근 불가 - 관리자만 이용 가능합니다.";
+    exit;
+}
 
-</body>
-</html>
+// POST -> Ajax
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    header('Content-Type: application/json; charset=utf-8');
+
+    $controller = new ReservationController();
+    $result = $controller->handleAjax($_POST);
+    echo json_encode($result);
+    exit;
+}
+
+// GET -> 예약 목록 조회 + 뷰 로드
+$reservations = ReservationModel::getAllReservations();
+
+require_once __DIR__ . '/../../Views/layouts/header.php';
+require_once __DIR__ . '/../../Views/reservations/list_view.php';
+require_once __DIR__ . '/../../Views/layouts/footer.php';

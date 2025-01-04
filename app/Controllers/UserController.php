@@ -5,11 +5,11 @@ use App\Models\UserModel;
 
 class UserController
 {
-    // 로그인
-    public function loginProcess(array $data): array
+    // 로그인 처리
+    public function loginProcess(array $postData): array
     {
-        $username = $data['username'] ?? '';
-        $password = $data['password'] ?? '';
+        $username = $postData['username'] ?? '';
+        $password = $postData['password'] ?? '';
 
         $user = UserModel::getUserByUsername($username);
         if (!$user) {
@@ -22,16 +22,16 @@ class UserController
         // 로그인 성공 -> 세션 저장
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['role'] = $user['role'];
+
         return ['status'=>'success','message'=>'로그인 성공'];
     }
 
-    // 회원가입
-    public function registerProcess(array $data): array
+    // 회원가입 처리
+    public function registerProcess(array $postData): array
     {
-        $username = $data['username'] ?? '';
-        $password = $data['password'] ?? '';
+        $username = $postData['username'] ?? '';
+        $password = $postData['password'] ?? '';
 
-        // 중복 체크
         $exist = UserModel::getUserByUsername($username);
         if ($exist) {
             return ['status'=>'error','message'=>'이미 존재하는 아이디'];
@@ -44,7 +44,7 @@ class UserController
         return ['status'=>'error','message'=>'DB Insert 실패'];
     }
 
-    // 로그아웃
+    // 로그아웃 처리
     public function logout()
     {
         session_destroy();
