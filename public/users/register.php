@@ -1,9 +1,9 @@
 <?php
 // register.php (회원가입)
 
-require_once __DIR__ . '/../../Core/Database.php';
-require_once __DIR__ . '/../../Models/UserModel.php';
-require_once __DIR__ . '/../../Controllers/UserController.php';
+require_once __DIR__ . '/../../app/Core/Database.php';
+require_once __DIR__ . '/../../app/Models/UserModel.php';
+require_once __DIR__ . '/../../app/Controllers/UserController.php';
 
 use App\Controllers\UserController;
 

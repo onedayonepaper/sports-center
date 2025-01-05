@@ -2,9 +2,9 @@
 // admin_manage.php
 namespace App;
 
-require_once __DIR__ . '/../../Core/Database.php';
-require_once __DIR__ . '/../../Models/UserModel.php';
-require_once __DIR__ . '/../../Controllers/AdminController.php';
+require_once __DIR__ . '/../../app/Core/Database.php';
+require_once __DIR__ . '/../../app/Models/UserModel.php';
+require_once __DIR__ . '/../../app/Controllers/AdminController.php';
 
 use App\Controllers\AdminController;
 
@@ -31,6 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // GET 요청 -> 관리자 화면
-require_once __DIR__ . '/../../Views/layouts/header.php';
-require_once __DIR__ . '/../../Views/admin/admin_manage.php';
-require_once __DIR__ . '/../../Views/layouts/footer.php';
+require_once __DIR__ . '/../../app/Views/layouts/header.php';
+require_once __DIR__ . '/../../app/Views/admin/admin_manage.php';
+require_once __DIR__ . '/../../app/Views/layouts/footer.php';

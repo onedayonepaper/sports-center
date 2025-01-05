@@ -1,8 +1,8 @@
 <?php
 // index.php (메인 페이지)
 
-require_once __DIR__ . '/../Core/Database.php';
-require_once __DIR__ . '/../Models/UserModel.php';
+require_once __DIR__ . '/../app/Core/Database.php';
+require_once __DIR__ . '/../app/Models/UserModel.php';
 
 use App\Models\UserModel;
 
@@ -20,7 +20,7 @@ try {
 }
 
 // 공통 헤더
-require_once __DIR__ . '/../Views/layouts/header.php';
+require_once __DIR__ . '/../app/Views/layouts/header.php';
 ?>
 <h1>스포츠 센터 메인</h1>
 
@@ -37,4 +37,4 @@ require_once __DIR__ . '/../Views/layouts/header.php';
 
 <?php
 // 공통 푸터
-require_once __DIR__ . '/../Views/layouts/footer.php';
+require_once __DIR__ . '/../app/Views/layouts/footer.php';
