@@ -6,23 +6,23 @@ class Database {
 
     public static function getConnection() {
         if (self::$conn === null) {
-            // Railway에서 제공하는 환경 변수
-            $host = getenv('MYSQLHOST') ?: getenv('DB_HOST') ?: 'localhost';
-            $port = getenv('MYSQLPORT') ?: '3306';
-            $dbname = getenv('MYSQLDATABASE') ?: getenv('DB_NAME') ?: 'sports_db';
-            $user = getenv('MYSQLUSER') ?: getenv('DB_USER') ?: 'testuser';
-            $pass = getenv('MYSQLPASSWORD') ?: getenv('DB_PASS') ?: 'testpass';
+//            $host = getenv('DB_HOST') ?: 'db';
+//            $dbname = getenv('DB_NAME') ?: 'sports_db';
+//            $user = getenv('DB_USER') ?: 'testuser';
+//            $pass = getenv('DB_PASS') ?: 'testpass';
+//            $dsn = "mysql:host={$host};dbname={$dbname};charset=utf8mb4";
+            $host   = getenv('MYSQLHOST')       ?: 'db';
+            $port   = getenv('MYSQLPORT')       ?: '3306';
+            $dbname = getenv('MYSQL_DATABASE')    ?: 'sports_db';
+            $user   = getenv('MYSQLUSER')       ?: 'testuser';
+            $pass   = getenv('MYSQLPASSWORD')   ?: 'testpass';
 
-            // DSN에 포트 포함
+            // DSN에 port까지 넣어주면 확실
             $dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4";
 
-            try {
-                self::$conn = new \PDO($dsn, $user, $pass);
-                self::$conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            } catch (\PDOException $e) {
-                // 필요하면 로깅 또는 에러 핸들링
-                die("DB 연결 오류: " . $e->getMessage());
-            }
+
+            self::$conn = new \PDO($dsn, $user, $pass);
+            self::$conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }
         return self::$conn;
     }
