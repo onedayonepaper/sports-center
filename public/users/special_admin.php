@@ -2,9 +2,9 @@
 // special_admin.php
 namespace App;
 
-require_once __DIR__ . '/../../Core/Database.php';
-require_once __DIR__ . '/../../Models/UserModel.php';
-require_once __DIR__ . '/../../Controllers/SpecialAdminController.php';
+require_once __DIR__ . '/../../app/Core/Database.php';
+require_once __DIR__ . '/../../app/Models/UserModel.php';
+require_once __DIR__ . '/../../app/Controllers/SpecialAdminController.php';
 
 use App\Controllers\SpecialAdminController;
 
@@ -23,6 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // GET 요청 -> 관리자 생성 폼 표시
-require_once __DIR__ . '/../../Views/layouts/header.php';
-require_once __DIR__ . '/../../Views/admin/special_admin_form.php';
-require_once __DIR__ . '/../../Views/layouts/footer.php';
+require_once __DIR__ . '/../../app/Views/layouts/header.php';
+require_once __DIR__ . '/../../app/Views/admin/special_admin_form.php';
+require_once __DIR__ . '/../../app/Views/layouts/footer.php';

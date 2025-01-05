@@ -20,6 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // GET 요청 -> 회원가입 폼
-require_once __DIR__ . '/../../Views/layouts/header.php';
-require_once __DIR__ . '/../../Views/user/register_form.php';
-require_once __DIR__ . '/../../Views/layouts/footer.php';
+require_once __DIR__ . '/../../app/Views/layouts/header.php';
+require_once __DIR__ . '/../../app/Views/user/register_form.php';
+require_once __DIR__ . '/../../app/Views/layouts/footer.php';

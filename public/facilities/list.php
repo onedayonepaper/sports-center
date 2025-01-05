@@ -1,9 +1,9 @@
 <?php
 namespace App;
 
-require_once __DIR__ . '/../../Core/Database.php';
-require_once __DIR__ . '/../../Models/FacilityModel.php';
-require_once __DIR__ . '/../../Controllers/FacilityController.php';
+require_once __DIR__ . '/../../app/Core/Database.php';
+require_once __DIR__ . '/../../app/Models/FacilityModel.php';
+require_once __DIR__ . '/../../app/Controllers/FacilityController.php';
 
 use App\Controllers\FacilityController;
 use App\Models\FacilityModel;
@@ -33,6 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $facilities = FacilityModel::getAllFacilities();
 
 // 뷰 렌더
-require_once __DIR__ . '/../../Views/layouts/header.php';
-require_once __DIR__ . '/../../Views/facility/list_view.php';
-require_once __DIR__ . '/../../Views/layouts/footer.php';
+require_once __DIR__ . '/../../app/Views/layouts/header.php';
+require_once __DIR__ . '/../../app/Views/facility/list_view.php';
+require_once __DIR__ . '/../../app/Views/layouts/footer.php';

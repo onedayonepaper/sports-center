@@ -2,8 +2,8 @@
 // reservations/manage.php
 
 // PHP 로직 (DB 연결, Model, 세션 등) - 상단에 배치
-require_once __DIR__ . '/../app/Core/Database.php';
-require_once __DIR__ . '/../app/Models/ReservationModel.php';
+require_once __DIR__ . '/../../app/Core/Database.php';
+require_once __DIR__ . '/../../app/Models/ReservationModel.php';
 
 use App\Models\ReservationModel;
 
