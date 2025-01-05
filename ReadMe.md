@@ -11,40 +11,35 @@
 
 ```json
 sports-center/
+ ├── public/                  # (웹 루트)
+ │    ├── index.php           # 메인 엔트리
+ │    ├── facilities/         # 시설 관련 파일
+ │    ├── reservations/       # 예약 관련 파일
+ │    └── users/              # 유저 관련 파일
  ├── app/
- │    ├── Core/
- │    │    └── Database.php      (PDO 연결)
- │    ├── Models/
- │    │    ├── FacilityModel.php
- │    │    ├── UserModel.php
- │    │    └── ReservationModel.php
  │    ├── Controllers/
  │    │    ├── AdminController.php
  │    │    ├── FacilityController.php
  │    │    ├── ReservationController.php
  │    │    ├── SpecialAdminController.php
  │    │    ├── UserController.php
+ │    ├── Core/
+ │    │    └── Database.php      (PDO 연결)
+ │    ├── Models/
+ │    │    ├── FacilityModel.php
+ │    │    ├── UserModel.php
+ │    │    └── ReservationModel.php
  │    ├── Views/
+ │    │    ├── admin
+ │    │    ├── facility
+ │    │    ├── layouts
+ │    │    │    ├── header.php
+ │    │    │    └── footer.php
+ │    │    └── user
+ │    │    ├── reservations
+ │    │    └── user
  ├── initdb/
  │    └── init.sql
- └── public/
-      ├── index.php                   (메인 페이지 or 안내)
-      ├── facilities/
-      │    ├── list.php              (시설 목록)
-      │    ├── create.php            (시설 등록)
-      │    ├── update.php            (시설 수정)
-      │    └── delete.php            (시설 삭제)
-      ├── reservations/
-      │    ├── list.php
-      │    ├── create.php
-      │    ├── update.php
-      │    └── delete.php
-      └── users/
-           ├── login.php
-           ├── logout.php
-           ├── register.php
-           └── list.php
-           └── create_admin_secret.php
  ├── docker-compose.yml
  ├── Dockerfile
  └── ReadMe.md

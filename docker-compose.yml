@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   web:
-    build: 
-      context: .             # 현재 폴더 (Dockerfile도 여기)
+    build:
+      context: .
       dockerfile: Dockerfile
     container_name: web_app
     ports:
       - "8080:80"
     volumes:
-      - ./src:/var/www/html  # 혹은 COPY로 대체
+      - .:/var/www/html    # 프로젝트 루트를 컨테이너 /var/www/html에 마운트
     depends_on:
       - db
     networks:
@@ -18,27 +18,22 @@ services:
   db:
     image: mysql:8.0
     container_name: db_app
-
-    # MySQL root 사용자 비밀번호
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: sports_db
       MYSQL_USER: testuser
       MYSQL_PASSWORD: testpass
-    # 데이터 영구 보존
     volumes:
       - db_data:/var/lib/mysql
-      # init.sql을 /initdb 디렉토리에 마운트
       - ./initdb:/initdb
-    # 컨테이너가 켜질 때마다 init.sql 실행 (IF NOT EXISTS로 안전)
     command: --init-file /initdb/init.sql
     ports:
       - "3306:3306"
     networks:
       - mynet
-# 네트워크 정의
+
 networks:
   mynet:
-# MySQL 데이터 저장용 볼륨
+
 volumes:
   db_data:
