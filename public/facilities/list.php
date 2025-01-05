@@ -12,13 +12,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// (예) 관리자만 접근
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'ADMIN') {
-    header("HTTP/1.1 403 Forbidden");
-    echo "접근 불가 - 관리자만 이용 가능.";
-    exit;
-}
-
 // POST -> Ajax 처리
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json; charset=utf-8');

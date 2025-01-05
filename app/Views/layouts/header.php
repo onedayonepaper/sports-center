@@ -10,6 +10,7 @@ $loggedUser = null;
 if (isset($_SESSION['user_id'])) {
     $loggedUser = [
         'user_id' => $_SESSION['user_id'],
+        'username' => $_SESSION['username'],
         'role'    => $_SESSION['role'] ?? 'USER'
     ];
 }
@@ -36,7 +37,7 @@ if (isset($_SESSION['user_id'])) {
 <header>
   <div class="user-info">
     <?php if ($loggedUser): ?>
-      <strong><?= htmlspecialchars($loggedUser['user_id']) ?></strong> 
+      <strong><?= htmlspecialchars($loggedUser['username']) ?></strong>
       (Role: <?= htmlspecialchars($loggedUser['role']) ?>)
       <a href="/users/logout.php">로그아웃</a>
     <?php else: ?>
@@ -46,7 +47,9 @@ if (isset($_SESSION['user_id'])) {
   </div>
   <div class="menu">
     <a href="/index.php">메인</a>
-    <a href="/users/admin_manage.php">관리자화면</a>
+      <?php if ($loggedUser && $loggedUser['role'] === 'ADMIN'): ?>
+          <a href="/admin/admin_manage.php">관리자화면</a>
+      <?php endif; ?>
     <a href="/facilities/list.php">시설 목록</a>
     <a href="/reservations/list.php">예약 목록</a>
   </div>

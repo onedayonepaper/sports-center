@@ -32,5 +32,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // GET 요청 -> 관리자 화면
 require_once __DIR__ . '/../../app/Views/layouts/header.php';
-require_once __DIR__ . '/../../app/Views/admin/admin_manage.php';
+require_once __DIR__ . '/../../app/Views/admin/admin_manage_view.php';
 require_once __DIR__ . '/../../app/Views/layouts/footer.php';

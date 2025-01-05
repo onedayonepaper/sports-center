@@ -21,6 +21,7 @@ class UserController
 
         // 로그인 성공 -> 세션 저장
         $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
 
         return ['status'=>'success','message'=>'로그인 성공'];

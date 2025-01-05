@@ -5,8 +5,11 @@ use App\Models\UserModel;
 $allUsers = UserModel::getAllUsers();
 ?>
 <h1>관리자 화면</h1>
-<p>관리자 전용 역할 변경/삭제 예시</p>
+<a href="/admin/facilities_manage.php">시설관리</a>
+<a href="/admin/reservations_manage.php">예약관리</a>
 
+
+<p>관리자 전용 역할 변경/삭제 예시</p>
 <table border="1" cellspacing="0" cellpadding="5">
   <thead>
     <tr><th>User ID</th><th>Username</th><th>Role</th><th>변경</th></tr>
